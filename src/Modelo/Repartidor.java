@@ -1,17 +1,47 @@
+package Modelo;
+
+import java.util.*;
 
 public class Repartidor {
 	private String nombre;
 	private String tipoDocumento;
 	private String documento;
 	private String vehiculo;
-	// private Queue<Pedido> pedidos;
+	private Queue<Pedido> pedidos;
 	
 	public Repartidor(String nombre, String tipoDocumento, String documento, String vehiculo) {
 		this.nombre = nombre;
 		this.tipoDocumento = tipoDocumento;
 		this.documento = documento;
 		this.vehiculo = vehiculo;
-		//this.pedidos = new LinkedList<Pedido>();
+		this.pedidos = new LinkedList<Pedido>();
+	}
+	
+	public void recibirPedido(Pedido p) {
+	    pedidos.offer(p);
+	    p.setRepartidor(this);
+	}
+	
+	public boolean entregarPedido(){
+		if(pedidos.isEmpty()) {
+			return false;
+		}
+		Pedido p = pedidos.poll();
+		p.setEstado(Estado.ENTREGADO);
+		return true;
+	}
+	
+	public boolean cancelarPedido(){
+		if(pedidos.isEmpty()) {
+			return false;
+		}
+		Pedido p = pedidos.poll();
+		p.setEstado(Estado.CANCELADO);
+		return true;
+	}
+	
+	public boolean estaLibre() {
+		return pedidos.isEmpty();
 	}
 
 	public String getNombre() {
@@ -28,6 +58,10 @@ public class Repartidor {
 
 	public String getDocumento() {
 		return documento;
+	}
+	
+	public Queue<Pedido> getPedidos(){
+		return pedidos;
 	}
 
 	public void setDocumento(String documento) {
@@ -46,41 +80,5 @@ public class Repartidor {
 	public String toString() {
 		return "Repartidor: nombre = " + nombre + ", tipoDocumento = " + tipoDocumento + ", documento = " + documento
 				+ ", vehiculo = " + vehiculo;
-	}
-	
-	/*
-	  public void recibirPedido(Pedido pedido){
-	 pedidos.add(pedido);
-	 }
-	 */
-	
-	/*
-	 public void entregarPedido() throws ESinPedido{
-	 if(pedidos.isEmpty())
-	 throw new ESinPedido("Este repartidor no tiene ningun pedido asignado");
-	 Pedido a = pedidos.poll();
-	 System.out,println("Pedido "+a.getId()+" entregado con exito")
-	 }
-	 */
-	
-	/*public void cancelarPedido() throws ESinPedido{
-	 if(pedidos.isEmpty())
-	 throw new ESinPedido("Este repartidor no tiene ningun pedido asignado");
-	 Pedido a = pedidos.poll();
-	 System.out,println("Pedido "+a.getId()+" cancelado con exito")
-	 }
-	 */
-	
-	/*
-	 public boolean estaLibre(){
-	 if(pedidos.isEmpty())
-	 return true;
-	 else return false;
-	 }
-	 */
-	
-	
-	
-	
-	
+	}	
 }
