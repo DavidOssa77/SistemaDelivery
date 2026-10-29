@@ -11,6 +11,8 @@ public class Restaurante {
 	private Queue<Repartidor> repartidores;
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Pago> historialPagos;
+	private ArrayList<Pedido> historialPedidos;            
+	private ArrayList<Repartidor> todosRepartidores;       
 	
 	public Restaurante(String nombre, String direccion) {
 		this.nombre = nombre;
@@ -19,6 +21,8 @@ public class Restaurante {
 		this.repartidores = new LinkedList<>();
 		this.clientes = new ArrayList<>();
 		this.historialPagos = new ArrayList<>();
+		this.historialPedidos = new ArrayList<>();             
+		this.todosRepartidores = new ArrayList<>();            
 	}
 	
 	public Pago addPago(double valor, Tipo tipo) {
@@ -36,6 +40,7 @@ public class Restaurante {
 	public void addRepartidor(String nombre, String tipoDocumento, String documento, String vehiculo) {
 		Repartidor r = new Repartidor(nombre, tipoDocumento, documento, vehiculo);
 		repartidores.offer(r);
+		todosRepartidores.add(r); 
 	}
 	
 	public void addPedido(String id, LocalDateTime fecha, double precio, String direccion, Pago pago, Cliente cliente) throws EPedidoEnCurso{
@@ -46,6 +51,7 @@ public class Restaurante {
 		Pedido p = new Pedido(id, fecha, precio, direccion, pago, cliente);
 		cliente.setPedido(p);
 		pedidos.offer(p);
+		historialPedidos.add(p); 
 	}
 	
 	public void asignarRepartidor() {
@@ -111,6 +117,13 @@ public class Restaurante {
 
 	public ArrayList<Pago> getHistorialPagos() {
 		return historialPagos;
+	}
+	public ArrayList<Pedido> getHistorialPedidos() {
+	    return historialPedidos;
+	}
+
+	public ArrayList<Repartidor> getTodosRepartidores() {
+	    return todosRepartidores;
 	}
 
 	@Override
