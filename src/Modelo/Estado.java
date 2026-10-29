@@ -1,0 +1,5 @@
+package Modelo;
+
+public enum Estado {
+	PENDIENTE, EN_PREPARACION, ENVIADO, ENTREGADO, CANCELADO
+}
