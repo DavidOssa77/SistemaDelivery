@@ -1,3 +1,5 @@
+package Modelo;
+
 import java.time.LocalDateTime;
 
 public class Pago {
@@ -39,9 +41,4 @@ public class Pago {
 	public String toString() {
 		return "Pago: valor = " + valor + ", tipo = " + tipo + ", fecha = " + fecha;
 	}
-	
-	
-	
-	
-
 }
