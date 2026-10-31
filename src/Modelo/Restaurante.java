@@ -7,17 +7,21 @@ import java.time.LocalDateTime;
 public class Restaurante {
 	private String nombre;
 	private String direccion;
-	private Queue<Pedido> pedidos;
+	private GestorPedidos pedidos;
 	private Queue<Repartidor> repartidores;
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Pago> historialPagos;
 	private ArrayList<Pedido> historialPedidos;            
-	private ArrayList<Repartidor> todosRepartidores;       
+	private ArrayList<Repartidor> todosRepartidores;  
 	
 	public Restaurante(String nombre, String direccion) {
+		this(nombre, direccion, new GestorCola());
+	}
+	
+	public Restaurante(String nombre, String direccion, GestorPedidos pedidos) {
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.pedidos = new LinkedList<>();
+		this.pedidos = pedidos;
 		this.repartidores = new LinkedList<>();
 		this.clientes = new ArrayList<>();
 		this.historialPagos = new ArrayList<>();
@@ -50,18 +54,18 @@ public class Restaurante {
 		}
 		Pedido p = new Pedido(id, fecha, precio, direccion, pago, cliente);
 		cliente.setPedido(p);
-		pedidos.offer(p);
+		pedidos.agregar(p);
 		historialPedidos.add(p); 
 	}
 	
 	public void asignarRepartidor() {
-		while(!pedidos.isEmpty() && pedidos.peek().getEstado() == Estado.CANCELADO) {
-			pedidos.poll();
+		while(!pedidos.estaVacio() && pedidos.consultar().getEstado() == Estado.CANCELADO) {
+			pedidos.sacar();
 		}
-		if(pedidos.isEmpty() || repartidores.isEmpty()) {
+		if(pedidos.estaVacio() || repartidores.isEmpty()) {
 			return;
 		}
-		Pedido p = pedidos.poll();
+		Pedido p = pedidos.sacar();
 		Repartidor r = repartidores.poll();
 		
 		r.recibirPedido(p);
@@ -103,7 +107,7 @@ public class Restaurante {
 		return direccion;
 	}
 
-	public Queue<Pedido> getPedidos() {
+	public GestorPedidos getPedidos() {
 		return pedidos;
 	}
 
@@ -130,7 +134,5 @@ public class Restaurante {
 	public String toString() {
 		return "Restaurante [nombre=" + nombre + ", direccion=" + direccion + ", pedidos=" + pedidos + ", repartidores="
 				+ repartidores + ", clientes=" + clientes + ", historialPagos=" + historialPagos + "]";
-	}
-	
-	
+	}	
 }
