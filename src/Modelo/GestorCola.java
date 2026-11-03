@@ -9,6 +9,7 @@ public class GestorCola implements GestorPedidos {
 		cola.add(p);
 	}
 
+	@Override
 	public Pedido sacar() {
 		// poll devuelve null si la cola esta vacia, no lanza error
 		return cola.poll();
