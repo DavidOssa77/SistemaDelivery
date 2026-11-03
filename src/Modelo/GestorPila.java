@@ -11,6 +11,7 @@ public class GestorPila implements GestorPedidos {
 
 	@Override
 	public Pedido sacar() {
+		// pop lanza error si la pila esta vacia, por eso se revisa antes y se devuelve null igual que la cola
 		if(pila.isEmpty()) {
 			return null;
 		}

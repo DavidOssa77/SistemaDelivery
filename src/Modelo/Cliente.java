@@ -16,7 +16,8 @@ public class Cliente {
 		this.telefono = telefono;
 		this.direccion = direccion;
 	}
-	
+
+	// solo se puede cancelar si el pedido no ha salido, o sea pendiente o en preparacion
 	public boolean cancelarPedido() {
 		if(pedido == null) {
 			return false;

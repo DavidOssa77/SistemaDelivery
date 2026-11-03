@@ -14,6 +14,7 @@ public class GestorLista implements GestorPedidos {
 		if(lista.isEmpty()) {
 			return null;
 		}
+		// remove(0) corre todos los demas una posicion, por eso es mas lenta que la cola
 		return lista.remove(0);
 	}
 

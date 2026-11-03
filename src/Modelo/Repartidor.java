@@ -7,7 +7,7 @@ public class Repartidor {
 	private String tipoDocumento;
 	private String documento;
 	private String vehiculo;
-	private Queue<Pedido> pedidos;
+	private Queue<Pedido> pedidos; // pedidos que lleva, en la practica uno a la vez
 	
 	public Repartidor(String nombre, String tipoDocumento, String documento, String vehiculo) {
 		this.nombre = nombre;
@@ -16,12 +16,14 @@ public class Repartidor {
 		this.vehiculo = vehiculo;
 		this.pedidos = new LinkedList<Pedido>();
 	}
-	
+
+	// recibe el pedido y el pedido queda sabiendo quien lo lleva
 	public void recibirPedido(Pedido p) {
 	    pedidos.offer(p);
 	    p.setRepartidor(this);
 	}
-	
+
+	// saca el pedido que lleva y lo marca entregado, devuelve false si no llevaba nada
 	public boolean entregarPedido(){
 		if(pedidos.isEmpty()) {
 			return false;
